@@ -1,0 +1,50 @@
+# ==========================================
+# Root & General
+# ==========================================
+.env
+.env.local
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+*.pem
+
+
+# ==========================================
+# Frontend (Next.js & Node)
+# ==========================================
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/coverage/
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+
+# Debug logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# Vercel & TypeScript
+frontend/.vercel/
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+
+# ==========================================
+# Backend (ASP.NET Core Web API)
+# ==========================================
+backend/bin/
+backend/obj/
+backend/out/
+backend/TestResults/
+backend/appsettings.Development.json
+backend/appsettings.Production.json
+backend/*.user
