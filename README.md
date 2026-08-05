@@ -38,7 +38,8 @@ The application follows a modern full-stack architecture with:
 - Save assignments as drafts or publish them
 - Set submission deadlines
 - Configure maximum marks
-- Allow or restrict late submissions
+- Enable or restrict late submissions
+- Configure custom grace periods.
 - Review student submissions
 - Grade submissions
 - Provide feedback
@@ -75,7 +76,7 @@ The application follows a modern full-stack architecture with:
                            │ REST API
                            ▼
            ┌───────────────────────────────┐
-           │ ASP.NET Core Web API (.NET 8) │
+           │ ASP.NET Core Web API (.NET 9) │
            └──────────────┬────────────────┘
                           │ EF Core
                           ▼
@@ -263,9 +264,11 @@ assignment-management-system/docs/
 The system follows the following business rules:
 
 - Role-based authorization using JWT
+- System-wide UTC timestamp handling
 - Draft and published assignment workflow
 - Deadline validation for assignment submissions
-- Optional late submission support
+- Flexible deadlines with optional late submission support.
+- Upload optional attachments (up to 10MB) or external links
 - Assignment grading and teacher feedback
 - Student enrollment-based assignment visibility
 - Secure access control for all resources
