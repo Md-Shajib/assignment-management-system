@@ -46,5 +46,6 @@ backend/obj/
 backend/out/
 backend/TestResults/
 backend/appsettings.Development.json
+backend/appsettings.Local.json
 backend/appsettings.Production.json
 backend/*.user
