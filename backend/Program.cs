@@ -1,7 +1,17 @@
+using DotNetEnv;
+Env.TraversePath().Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Read DB connection string
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") 
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Read JWT secret
+var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") 
+    ?? builder.Configuration["JwtSettings:Secret"];
+
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
