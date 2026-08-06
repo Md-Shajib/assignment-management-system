@@ -1,9 +1,34 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# Frontend AI Instructions
 
-# This is NOT the Next.js you know
+This directory contains the frontend application for the Assignment & Submission Management System.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+Before generating, modifying, or reviewing code, must follow these rule files:
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## Global Rules
 
-<!-- END:nextjs-agent-rules -->
+- ../.agents/global/project-context.md
+- ../.agents/global/coding-standards.md
+- ../.agents/global/review.md
+
+## Frontend Rules
+
+- ../.agents/frontend-standards.md
+- ../.agents/architecture.md
+- ../.agents/typescript-strict.md
+- ../.agents/validation.md
+- ../.agents/ui.md
+
+Do not ignore or selectively apply these rules. Treat them as mandatory for every task performed within the frontend directory.
+
+## Project Documentation
+
+The `../docs` directory is the single source of truth for:
+
+- Project Assumptions
+- System Design
+- Database Design
+- API Design
+
+Never generate code that contradicts the project documentation.
+
+If a rule conflicts with the documentation, the documentation takes precedence.
