@@ -1,5 +1,6 @@
 using DotNetEnv;
 using AssignmentManagement.Infrastructure;
+using AssignmentManagement.Infrastructure.Database;
 using AssignmentManagement.Shared.Extensions;
 
 Env.TraversePath().Load();
@@ -52,5 +53,14 @@ app.MapControllers();
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))
    .WithName("HealthCheck");
+
+// Apply database migrations and seed default data when a database is configured.
+if (!string.IsNullOrWhiteSpace(connectionString))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DatabaseSeed");
+    await DatabaseSeeder.SeedAsync(dbContext, logger);
+}
 
 app.Run();
