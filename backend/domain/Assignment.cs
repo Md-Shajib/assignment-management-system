@@ -16,6 +16,7 @@ public class Assignment
     public string Description { get; set; } = string.Empty;
     public decimal MaxMarks { get; set; }
     public DateTime Deadline { get; set; }
+    public DateTime? LateSubmissionEndDate { get; set; }
     public string Status { get; set; } = AssignmentStatus.Draft;
     public bool IsDeleted { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

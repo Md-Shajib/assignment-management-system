@@ -18,6 +18,7 @@ public class AssignmentResponseTransformer
             Description = assignment.Description,
             MaxMarks = assignment.MaxMarks,
             Deadline = assignment.Deadline,
+            LateSubmissionEndDate = assignment.LateSubmissionEndDate,
             Status = assignment.Status,
             CreatedAt = assignment.CreatedAt,
             UpdatedAt = assignment.UpdatedAt

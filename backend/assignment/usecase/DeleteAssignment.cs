@@ -15,14 +15,16 @@ public class DeleteAssignment
         _repository = repository;
     }
 
-    public async Task ExecuteAsync(Guid id, Guid teacherId, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(Guid id, Guid actorId, bool isAdmin, CancellationToken cancellationToken = default)
     {
         var assignment = await _repository.GetByIdAsync(id, cancellationToken)
             ?? throw new NotFoundException($"Assignment '{id}' was not found.");
 
-        if (assignment.TeacherId != teacherId)
+        if (!isAdmin && assignment.TeacherId != actorId)
         {
-            throw new BusinessRuleException("Only the owning teacher can delete this assignment.");
+            throw new BusinessRuleException(
+                "Only the owning teacher can delete this assignment.",
+                StatusCodes.Status403Forbidden);
         }
 
         await _repository.DeleteAsync(assignment, cancellationToken);

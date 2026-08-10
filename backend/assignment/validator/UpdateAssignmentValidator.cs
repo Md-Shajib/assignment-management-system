@@ -15,5 +15,12 @@ public class UpdateAssignmentValidator : AbstractValidator<UpdateAssignmentReque
         RuleFor(x => x.Description).NotEmpty();
         RuleFor(x => x.MaxMarks).GreaterThan(0);
         RuleFor(x => x.Deadline).GreaterThan(DateTime.UtcNow);
+
+        When(x => x.LateSubmissionEndDate.HasValue, () =>
+        {
+            RuleFor(x => x.LateSubmissionEndDate!.Value)
+                .GreaterThan(x => x.Deadline)
+                .WithMessage("The late submission end date must be after the deadline.");
+        });
     }
 }

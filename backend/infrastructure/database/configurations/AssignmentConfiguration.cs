@@ -19,6 +19,7 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Domain.Assignmen
         builder.Property(a => a.Description).IsRequired();
         builder.Property(a => a.MaxMarks).HasPrecision(5, 2);
         builder.Property(a => a.Status).IsRequired().HasMaxLength(20);
+        builder.Property(a => a.LateSubmissionEndDate);
 
         builder.HasOne(a => a.Course)
             .WithMany(c => c.Assignments)
