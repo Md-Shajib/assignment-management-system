@@ -21,4 +21,13 @@ public class GetCourse
 
     public async Task<IReadOnlyList<Domain.Course>> AllAsync(CancellationToken cancellationToken = default)
         => await _repository.GetAllAsync(cancellationToken);
+
+    /// <summary>
+    /// Returns courses currently assigned to the given teacher.
+    /// </summary>
+    public async Task<IReadOnlyList<Domain.Course>> ByTeacherAsync(Guid teacherId, CancellationToken cancellationToken = default)
+    {
+        var courses = await _repository.GetAllAsync(cancellationToken);
+        return courses.Where(c => c.TeacherId == teacherId).ToList();
+    }
 }

@@ -16,6 +16,8 @@ using AssignmentManagement.Course.UseCases;
 using AssignmentManagement.Student.Repositories;
 using AssignmentManagement.Submission.Repositories;
 using AssignmentManagement.Teacher.Repositories;
+using AssignmentManagement.Teacher.Transformers;
+using AssignmentManagement.Teacher.UseCases;
 using AssignmentManagement.Infrastructure.Authentication;
 using AssignmentManagement.Infrastructure.Database;
 using AssignmentManagement.Infrastructure.Repositories;
@@ -71,6 +73,7 @@ public static class DependencyInjection
         services.AddScoped<AuthTransformer>();
         services.AddScoped<CourseRequestTransformer>();
         services.AddScoped<CourseResponseTransformer>();
+        services.AddScoped<TeacherResponseTransformer>();
 
         // Use cases.
         services.AddScoped<CreateAssignment>();
@@ -83,6 +86,9 @@ public static class DependencyInjection
         services.AddScoped<UpdateCourse>();
         services.AddScoped<DeleteCourse>();
         services.AddScoped<GetCourse>();
+        services.AddScoped<GetTeacher>();
+        services.AddScoped<AssignTeacherToCourse>();
+        services.AddScoped<UnassignTeacherFromCourse>();
 
         // TODO: Register remaining feature use cases and transformers.
         return services;
