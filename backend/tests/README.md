@@ -1,10 +1,12 @@
 # Tests
 
-Placeholder test structure. Unit tests go under `tests/unit/<feature>/` and integration tests under `tests/integration/<feature>/`.
+Automated test suite for the backend, hosted in the `AssignmentManagement.Tests` xUnit project:
 
-A dedicated test project (e.g. xUnit) will be added when the first feature is implemented. Until then, each directory contains only a `.gitkeep`.
+- `Unit/` — isolated tests of use cases and validators (mocked repositories via Moq) and shared utilities. Organized per feature (`Auth`, `Assignment`, `Submission`, `Shared`).
+- `Integration/` — real HTTP endpoint tests using `WebApplicationFactory<Program>` backed by an in-memory SQLite database (`SKIP_DATABASE_INITIALIZATION=true` bypasses the startup migration/seeder; the schema is created with `EnsureCreated`).
 
-## Conventions
+## Run
 
-- Unit tests: cover individual use cases and validators in isolation (mocked repositories).
-- Integration tests: cover real HTTP endpoints with an in-memory or test PostgreSQL database.
+```bash
+dotnet test
+```
