@@ -10,6 +10,9 @@ public interface IAssignmentRepository
     Task<Domain.Assignment?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Domain.Assignment>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Domain.Assignment>> GetByCourseAsync(Guid courseId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Domain.Assignment>> GetByTeacherAsync(Guid teacherId, CancellationToken cancellationToken = default);
+    Task<bool> ExistsByCourseAndTitleAsync(Guid courseId, string title, Guid? excludeId = null, CancellationToken cancellationToken = default);
+    Task<bool> HasGradedSubmissionsAsync(Guid assignmentId, CancellationToken cancellationToken = default);
     Task AddAsync(Domain.Assignment assignment, CancellationToken cancellationToken = default);
     Task UpdateAsync(Domain.Assignment assignment, CancellationToken cancellationToken = default);
     Task DeleteAsync(Domain.Assignment assignment, CancellationToken cancellationToken = default);

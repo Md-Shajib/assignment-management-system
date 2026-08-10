@@ -83,6 +83,8 @@ public static class DependencyInjection
         services.AddScoped<UpdateAssignment>();
         services.AddScoped<DeleteAssignment>();
         services.AddScoped<GetAssignment>();
+        services.AddScoped<PublishAssignment>();
+        services.AddScoped<CloseAssignment>();
         services.AddScoped<LoginUseCase>();
         services.AddScoped<RegisterUseCase>();
         services.AddScoped<CreateCourse>();

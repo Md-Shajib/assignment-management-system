@@ -12,6 +12,7 @@ public class AssignmentResponse
     public string Description { get; set; } = string.Empty;
     public decimal MaxMarks { get; set; }
     public DateTime Deadline { get; set; }
+    public DateTime? LateSubmissionEndDate { get; set; }
     public string Status { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }

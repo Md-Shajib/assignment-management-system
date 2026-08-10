@@ -12,6 +12,7 @@ public class CreateAssignmentRequest
     public string Description { get; set; } = string.Empty;
     public decimal MaxMarks { get; set; }
     public DateTime Deadline { get; set; }
+    public DateTime? LateSubmissionEndDate { get; set; }
 }
 
 /// <summary>
@@ -28,6 +29,7 @@ public static class CreateAssignmentRequestExtensions
             Description = request.Description,
             MaxMarks = request.MaxMarks,
             Deadline = request.Deadline,
+            LateSubmissionEndDate = request.LateSubmissionEndDate,
             Status = Shared.Constants.AssignmentStatus.Draft
         };
 }

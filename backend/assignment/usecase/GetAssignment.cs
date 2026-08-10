@@ -1,10 +1,11 @@
+using AssignmentManagement.Shared.Constants;
 using AssignmentManagement.Shared.Exceptions;
 using AssignmentManagement.Assignment.Repositories;
 
 namespace AssignmentManagement.Assignment.UseCases;
 
 /// <summary>
-/// Retrieves assignments, optionally filtered by course.
+/// Retrieves assignments with role-aware filters.
 /// </summary>
 public class GetAssignment
 {
@@ -23,4 +24,24 @@ public class GetAssignment
         => courseId.HasValue
             ? await _repository.GetByCourseAsync(courseId.Value, cancellationToken)
             : await _repository.GetAllAsync(cancellationToken);
+
+    /// <summary>
+    /// Returns assignments owned by the given teacher, optionally narrowed to a course.
+    /// </summary>
+    public async Task<IReadOnlyList<Domain.Assignment>> ByTeacherAsync(Guid teacherId, Guid? courseId, CancellationToken cancellationToken = default)
+    {
+        var assignments = await _repository.GetByTeacherAsync(teacherId, cancellationToken);
+        return courseId.HasValue
+            ? assignments.Where(a => a.CourseId == courseId.Value).ToList()
+            : assignments;
+    }
+
+    /// <summary>
+    /// Returns currently published assignments for a course (visible to enrolled students).
+    /// </summary>
+    public async Task<IReadOnlyList<Domain.Assignment>> PublishedByCourseAsync(Guid courseId, CancellationToken cancellationToken = default)
+    {
+        var assignments = await _repository.GetByCourseAsync(courseId, cancellationToken);
+        return assignments.Where(a => a.Status == AssignmentStatus.Published).ToList();
+    }
 }
