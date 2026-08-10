@@ -25,4 +25,10 @@ public class AuthRepository : IAuthRepository
 
     public async Task<bool> EmailExistsAsync(string email, CancellationToken cancellationToken = default)
         => await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
+
+    public async Task AddAsync(User user, CancellationToken cancellationToken = default)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
