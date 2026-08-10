@@ -1,0 +1,14 @@
+# Frontend build context excludes - keeps the image small and avoids stale artifacts.
+node_modules/
+.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+.vercel/
+.git/
+.env
+.env.local
+Dockerfile
+.dockerignore
