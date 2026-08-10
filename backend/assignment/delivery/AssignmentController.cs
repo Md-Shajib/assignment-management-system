@@ -58,7 +58,11 @@ public class AssignmentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IReadOnlyList<AssignmentResponse>>>> GetAll([FromQuery] Guid? courseId, CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<AssignmentResponse>>>> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] Guid? courseId,
+        [FromQuery] int page = PaginationQuery.DefaultPage,
+        [FromQuery] int pageSize = PaginationQuery.DefaultPageSize)
     {
         IReadOnlyList<Domain.Assignment> assignments;
 
@@ -78,8 +82,8 @@ public class AssignmentController : ControllerBase
             assignments = await _getAssignment.AllAsync(courseId, cancellationToken);
         }
 
-        return Ok(ApiResponse<IReadOnlyList<AssignmentResponse>>.Ok(
-            assignments.Select(_responseTransformer.ToResponse).ToList()));
+        var (items, meta) = PaginationQuery.Apply(assignments.Select(_responseTransformer.ToResponse), page, pageSize);
+        return Ok(ApiResponse<IReadOnlyList<AssignmentResponse>>.Paged(items, meta));
     }
 
     [HttpGet("{id:guid}")]
