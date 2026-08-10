@@ -55,7 +55,10 @@ app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))
    .WithName("HealthCheck");
 
 // Apply database migrations and seed default data when a database is configured.
-if (!string.IsNullOrWhiteSpace(connectionString))
+var skipDatabaseInitialization = string.Equals(
+    Environment.GetEnvironmentVariable("SKIP_DATABASE_INITIALIZATION"), "true", StringComparison.OrdinalIgnoreCase);
+
+if (!string.IsNullOrWhiteSpace(connectionString) && !skipDatabaseInitialization)
 {
     await using var scope = app.Services.CreateAsyncScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -64,3 +67,8 @@ if (!string.IsNullOrWhiteSpace(connectionString))
 }
 
 app.Run();
+
+// Exposed so WebApplicationFactory can bootstrap the API in integration tests.
+public partial class Program
+{
+}

@@ -50,6 +50,11 @@ backend/appsettings.Local.json
 backend/appsettings.Production.json
 backend/*.user
 
+# Backend test project (nested under backend/tests)
+backend/tests/**/bin/
+backend/tests/**/obj/
+backend/tests/**/TestResults/
+
 # ==========================================
 # Local implementation log (not committed)
 # ==========================================

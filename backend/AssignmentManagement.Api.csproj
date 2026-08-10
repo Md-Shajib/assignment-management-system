@@ -29,4 +29,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="tests\**" />
+    <Content Remove="tests\**" />
+    <None Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+    <Page Remove="tests\**" />
+  </ItemGroup>
+
 </Project>
