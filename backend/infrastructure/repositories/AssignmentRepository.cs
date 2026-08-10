@@ -46,7 +46,7 @@ public class AssignmentRepository : IAssignmentRepository
 
     public async Task<bool> HasGradedSubmissionsAsync(Guid assignmentId, CancellationToken cancellationToken = default)
         => await _context.Submissions
-            .AnyAsync(s => s.AssignmentId == assignmentId && s.Status == SubmissionStatus.Reviewed, cancellationToken);
+            .AnyAsync(s => s.AssignmentId == assignmentId && s.Status == SubmissionStatus.Graded, cancellationToken);
 
     public async Task AddAsync(Domain.Assignment assignment, CancellationToken cancellationToken = default)
     {

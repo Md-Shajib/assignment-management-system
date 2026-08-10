@@ -9,6 +9,7 @@ public interface ISubmissionRepository
 {
     Task<Domain.Submission?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Domain.Submission?> GetByAssignmentAndStudentAsync(Guid assignmentId, Guid studentId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Domain.Submission>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Domain.Submission>> GetByAssignmentAsync(Guid assignmentId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Domain.Submission>> GetByStudentAsync(Guid studentId, CancellationToken cancellationToken = default);
     Task AddAsync(Domain.Submission submission, CancellationToken cancellationToken = default);
