@@ -12,11 +12,11 @@ Before generating, modifying, or reviewing code, you must read and follow all of
 
 ## Backend Rules
 
-- ../.agents/backend-standards.md
-- ../.agents/architecture.md
-- ../.agents/api.md
-- ../.agents/database.md
-- ../.agents/security.md
+- ../.agents/backend/backend-standards.md
+- ../.agents/backend/architecture.md
+- ../.agents/backend/api.md
+- ../.agents/backend/database.md
+- ../.agents/backend/security.md
 
 Do not ignore or selectively apply these rules. Treat them as mandatory for every task performed within the backend directory.
 

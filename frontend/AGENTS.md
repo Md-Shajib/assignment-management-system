@@ -12,11 +12,11 @@ Before generating, modifying, or reviewing code, must follow these rule files:
 
 ## Frontend Rules
 
-- ../.agents/frontend-standards.md
-- ../.agents/architecture.md
-- ../.agents/typescript-strict.md
-- ../.agents/validation.md
-- ../.agents/ui.md
+- ../.agents/frontend/frontend-standards.md
+- ../.agents/frontend/architecture.md
+- ../.agents/frontend/typescript-strict.md
+- ../.agents/frontend/validation.md
+- ../.agents/frontend/ui.md
 
 Do not ignore or selectively apply these rules. Treat them as mandatory for every task performed within the frontend directory.
 
