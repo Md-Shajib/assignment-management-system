@@ -24,6 +24,11 @@ public class SubmissionRepository : ISubmissionRepository
         => await _context.Submissions
             .FirstOrDefaultAsync(s => s.AssignmentId == assignmentId && s.StudentId == studentId, cancellationToken);
 
+    public async Task<IReadOnlyList<Domain.Submission>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await _context.Submissions
+            .OrderByDescending(s => s.CreatedAt)
+            .ToListAsync(cancellationToken);
+
     public async Task<IReadOnlyList<Domain.Submission>> GetByAssignmentAsync(Guid assignmentId, CancellationToken cancellationToken = default)
         => await _context.Submissions
             .Where(s => s.AssignmentId == assignmentId)

@@ -6,5 +6,6 @@ namespace AssignmentManagement.Shared.Constants;
 public static class SubmissionStatus
 {
     public const string Submitted = "Submitted";
-    public const string Reviewed = "Reviewed";
+    public const string LateSubmitted = "LateSubmitted";
+    public const string Graded = "Graded";
 }
