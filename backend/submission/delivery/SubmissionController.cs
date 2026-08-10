@@ -99,7 +99,11 @@ public class SubmissionController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IReadOnlyList<SubmissionResponse>>>> GetAll([FromQuery] Guid? assignmentId, CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<SubmissionResponse>>>> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] Guid? assignmentId,
+        [FromQuery] int page = PaginationQuery.DefaultPage,
+        [FromQuery] int pageSize = PaginationQuery.DefaultPageSize)
     {
         IReadOnlyList<Domain.Submission> submissions;
 
@@ -125,8 +129,8 @@ public class SubmissionController : ControllerBase
                 : await _getSubmission.AllAsync(cancellationToken);
         }
 
-        return Ok(ApiResponse<IReadOnlyList<SubmissionResponse>>.Ok(
-            submissions.Select(_responseTransformer.ToResponse).ToList()));
+        var (items, meta) = PaginationQuery.Apply(submissions.Select(_responseTransformer.ToResponse), page, pageSize);
+        return Ok(ApiResponse<IReadOnlyList<SubmissionResponse>>.Paged(items, meta));
     }
 
     [HttpGet("my")]

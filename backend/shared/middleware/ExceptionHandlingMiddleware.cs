@@ -35,6 +35,13 @@ public class ExceptionHandlingMiddleware
         {
             await WriteErrorAsync(context, ex.StatusCode, ex.Message);
         }
+        catch (FluentValidation.ValidationException ex)
+        {
+            var errors = ex.Errors
+                .Select(e => new FieldError { Field = e.PropertyName, Message = e.ErrorMessage })
+                .ToList();
+            await WriteErrorAsync(context, StatusCodes.Status400BadRequest, "Validation failed.", errors);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unhandled exception occurred while processing the request.");
@@ -42,11 +49,11 @@ public class ExceptionHandlingMiddleware
         }
     }
 
-    private static async Task WriteErrorAsync(HttpContext context, int statusCode, string message)
+    private static async Task WriteErrorAsync(HttpContext context, int statusCode, string message, List<FieldError>? errors = null)
     {
         context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/json";
-        var body = ApiErrorResponse.BadRequest(message);
+        var body = ApiErrorResponse.BadRequest(message, errors);
         await context.Response.WriteAsJsonAsync(body);
     }
 }

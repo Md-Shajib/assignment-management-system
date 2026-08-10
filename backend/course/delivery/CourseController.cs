@@ -7,6 +7,7 @@ using AssignmentManagement.Course.Transformers;
 using AssignmentManagement.Course.Validators;
 using AssignmentManagement.Shared.Constants;
 using AssignmentManagement.Shared.Responses;
+using AssignmentManagement.Shared.Utilities;
 
 namespace AssignmentManagement.Course.Delivery;
 
@@ -46,11 +47,14 @@ public class CourseController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IReadOnlyList<CourseResponse>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<CourseResponse>>>> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] int page = PaginationQuery.DefaultPage,
+        [FromQuery] int pageSize = PaginationQuery.DefaultPageSize)
     {
         var courses = await _getCourse.AllAsync(cancellationToken);
-        return Ok(ApiResponse<IReadOnlyList<CourseResponse>>.Ok(
-            courses.Select(_responseTransformer.ToResponse).ToList()));
+        var (items, meta) = PaginationQuery.Apply(courses.Select(_responseTransformer.ToResponse), page, pageSize);
+        return Ok(ApiResponse<IReadOnlyList<CourseResponse>>.Paged(items, meta));
     }
 
     [HttpGet("{id:guid}")]

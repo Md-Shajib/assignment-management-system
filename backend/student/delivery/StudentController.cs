@@ -10,6 +10,7 @@ using AssignmentManagement.Student.Transformers;
 using AssignmentManagement.Student.Validators;
 using AssignmentManagement.Shared.Constants;
 using AssignmentManagement.Shared.Responses;
+using AssignmentManagement.Shared.Utilities;
 
 namespace AssignmentManagement.Student.Delivery;
 
@@ -49,11 +50,14 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IReadOnlyList<StudentResponse>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<StudentResponse>>>> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] int page = PaginationQuery.DefaultPage,
+        [FromQuery] int pageSize = PaginationQuery.DefaultPageSize)
     {
         var students = await _getStudent.AllAsync(cancellationToken);
-        return Ok(ApiResponse<IReadOnlyList<StudentResponse>>.Ok(
-            students.Select(_studentTransformer.ToResponse).ToList()));
+        var (items, meta) = PaginationQuery.Apply(students.Select(_studentTransformer.ToResponse), page, pageSize);
+        return Ok(ApiResponse<IReadOnlyList<StudentResponse>>.Paged(items, meta));
     }
 
     [HttpGet("{id:guid}")]

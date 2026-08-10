@@ -10,6 +10,7 @@ using AssignmentManagement.Teacher.Transformers;
 using AssignmentManagement.Teacher.Validators;
 using AssignmentManagement.Shared.Constants;
 using AssignmentManagement.Shared.Responses;
+using AssignmentManagement.Shared.Utilities;
 
 namespace AssignmentManagement.Teacher.Delivery;
 
@@ -49,11 +50,14 @@ public class TeacherController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IReadOnlyList<TeacherResponse>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<TeacherResponse>>>> GetAll(
+        CancellationToken cancellationToken,
+        [FromQuery] int page = PaginationQuery.DefaultPage,
+        [FromQuery] int pageSize = PaginationQuery.DefaultPageSize)
     {
         var teachers = await _getTeacher.AllAsync(cancellationToken);
-        return Ok(ApiResponse<IReadOnlyList<TeacherResponse>>.Ok(
-            teachers.Select(_teacherTransformer.ToResponse).ToList()));
+        var (items, meta) = PaginationQuery.Apply(teachers.Select(_teacherTransformer.ToResponse), page, pageSize);
+        return Ok(ApiResponse<IReadOnlyList<TeacherResponse>>.Paged(items, meta));
     }
 
     [HttpGet("{id:guid}")]
