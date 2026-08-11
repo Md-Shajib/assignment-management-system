@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend — Assignment & Submission Management System
 
-## Getting Started
+Next.js App Router client for the Assignment & Submission Management System.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + React 19
+- TypeScript (strict)
+- Tailwind CSS 4 with design tokens
+- TanStack Query (server state)
+- React Hook Form + Zod (forms and validation)
+- Lucide (icons)
+
+## Prerequisites
+
+- Node.js 22+
+- pnpm 10 (`corepack enable`)
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs at http://localhost:3000 and expects the API at the base URL below.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Default | Description |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_API_BASE_URL` | `http://localhost:5000/api/v1` | Base URL of the backend API |
 
-## Learn More
+Set it in `frontend/.env.local` for local development, or via the root `.env` when
+running through `docker compose`. It is inlined at build time, so the Docker image
+takes it as a build argument.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Script | Description |
+| :--- | :--- |
+| `pnpm dev` | Start the development server |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | Run ESLint |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```text
+src/
+├── app/                  # App Router routes, layouts, error/loading boundaries
+│   ├── (auth)/           # Unauthenticated routes (login)
+│   └── (dashboard)/      # Authenticated routes inside the app shell
+├── features/<feature>/   # api, components, hooks, schemas, services, store, types, utils
+├── shared/               # api, components, hooks, lib, providers, types, utils, constants
+├── styles/               # Global stylesheet and design tokens
+└── config/               # API and navigation configuration
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Conventions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Components render UI only; business logic lives in hooks and services.
+- UI components never call the API directly — go through a feature service.
+- Every API response is validated with Zod in `shared/api/http-client.ts`; each
+  service passes the schema for its `data` payload.
+- Route access is driven by `config/navigation.ts`, which the sidebar and the
+  dashboard layout's role guard both read from.
+- Never hardcode colors or type sizes — use the tokens defined in
+  `src/styles/globals.css`.
+
+The rules in `AGENTS.md` and `../.agents/` are authoritative, and `../docs` is the
+single source of truth for the API and data model.
+
+## Docker
+
+```bash
+docker build -t assignment-frontend \
+  --build-arg NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1 .
+```
+
+Or run the full stack (database, API, frontend) from the repository root with
+`docker compose up --build`.
