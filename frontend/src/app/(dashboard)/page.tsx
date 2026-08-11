@@ -12,8 +12,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-h2 tracking-tight">Dashboard</h2>
-        <p className="mt-1 text-body-sm text-on-surface-variant">
+        <h1 className="text-h1">Dashboard</h1>
+        <p className="mt-1 text-body-sm text-on-surface-muted">
           Welcome back, {user?.fullName ?? user?.email}. Here is your overview as a {roleLabel}.
         </p>
       </div>
@@ -25,7 +25,7 @@ export default function DashboardPage() {
               <CardTitle className="text-h3 text-on-surface-variant">—</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-body-sm text-on-surface-variant">Summary cards will appear here soon.</p>
+              <p className="text-body-sm text-on-surface-muted">Summary cards will appear here soon.</p>
             </CardContent>
           </Card>
         ))}

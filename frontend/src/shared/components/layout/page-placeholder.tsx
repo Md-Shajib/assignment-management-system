@@ -9,11 +9,11 @@ export function PagePlaceholder({ title, description }: PagePlaceholderProps) {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-h2 tracking-tight">{title}</h2>
-        <p className="mt-1 max-w-xl text-body-sm text-on-surface-variant">{description}</p>
+        <h1 className="text-h1">{title}</h1>
+        <p className="mt-1 max-w-xl text-body-sm text-on-surface-muted">{description}</p>
       </div>
       <Card className="flex min-h-64 flex-col items-center justify-center text-center">
-        <p className="text-body-sm text-on-surface-variant">This module is coming soon.</p>
+        <p className="text-body-sm text-on-surface-muted">This module is coming soon.</p>
       </Card>
     </div>
   );
