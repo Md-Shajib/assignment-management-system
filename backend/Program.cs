@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Scalar.AspNetCore;
 using AssignmentManagement.Infrastructure;
 using AssignmentManagement.Infrastructure.Database;
 using AssignmentManagement.Shared.Extensions;
@@ -39,11 +40,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference("swagger", options => options.WithTitle("Assignment Management System API"));
 }
 
 app.UseExceptionHandling();
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
