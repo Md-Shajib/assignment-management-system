@@ -1,97 +1,63 @@
-"use client";
+import type { Metadata } from "next";
+import { GraduationCap } from "lucide-react";
+import { AuthShowcase } from "@/features/auth/components/auth-showcase";
+import { LoginForm } from "@/features/auth/components/login-form";
+import { GoogleIcon } from "@/shared/components/ui/icons/google-icon";
+import { APP_NAME } from "@/shared/constants";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginFormValues } from "@/features/auth/schemas/login-schema";
-import { useAuth } from "@/features/auth/hooks/use-auth";
-import { AuthError } from "@/features/auth/utils/auth-error";
-import { ApiError } from "@/shared/api/api-error";
-import { Button } from "@/shared/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import { ROUTES } from "@/shared/constants";
-import { applyFieldErrors } from "@/shared/utils/form";
-
-const LOGIN_FIELDS = ["email", "password"] as const;
+export const metadata: Metadata = {
+  title: "Sign in",
+};
 
 export default function LoginPage() {
-  const { login } = useAuth();
-  const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
-  });
-
-  const onSubmit = async (values: LoginFormValues) => {
-    setServerError(null);
-    try {
-      await login(values);
-      router.replace(ROUTES.dashboard);
-    } catch (error) {
-      if (error instanceof ApiError) {
-        const unmatched = applyFieldErrors<LoginFormValues>(error.fieldErrors, LOGIN_FIELDS, setError);
-        setServerError([error.message, ...unmatched.map((item) => item.message)].join(" "));
-      } else if (error instanceof AuthError) {
-        setServerError(error.message);
-      } else {
-        setServerError("Something went wrong. Please try again.");
-      }
-    }
-  };
-
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Sign in</CardTitle>
-        <CardDescription>Access the Assignment Management System with your account.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {serverError ? (
-          <p className="mb-4 rounded-md bg-danger-container px-3 py-2 text-body-sm text-on-danger-container">
-            {serverError}
+    <div className="grid min-h-screen lg:grid-cols-2">
+      <AuthShowcase />
+
+      <section className="flex items-center justify-center bg-surface-container-lowest px-6 py-12 sm:px-10">
+        <div className="w-full max-w-sm">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-body-sm font-bold uppercase tracking-widest text-on-surface">
+              {APP_NAME}
+            </span>
+            <GraduationCap className="h-5 w-5 shrink-0 text-on-surface" aria-hidden />
+          </div>
+
+          <h1 className="mt-10 text-center text-h2 text-balance">Welcome to {APP_NAME}</h1>
+
+          <LoginForm />
+
+          <div className="mt-8 flex items-center gap-4">
+            <span className="h-px flex-1 bg-divider" />
+            <span className="text-caption text-on-surface-subtle">or</span>
+            <span className="h-px flex-1 bg-divider" />
+          </div>
+
+          {/* Federated sign-in has no API support yet (docs/04-API-DESIGN.md §8.1). */}
+          <button
+            type="button"
+            disabled
+            title="Google sign-in is not available yet"
+            className="mt-6 flex w-full items-center justify-center gap-3 rounded-md py-2 text-body-sm text-on-surface disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <GoogleIcon className="h-5 w-5 shrink-0" />
+            Sign in with Google
+          </button>
+
+          {/* Accounts are created by an administrator (docs/IMPLEMENTED.md: register is Admin-only). */}
+          <p className="mt-8 text-center text-body-sm text-on-surface-subtle">
+            Are you new?{" "}
+            <button
+              type="button"
+              disabled
+              title="Accounts are created by an administrator"
+              className="font-semibold text-primary disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Create an Account
+            </button>
           </p>
-        ) : null}
-
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
-          <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              invalid={Boolean(errors.email)}
-              {...register("email")}
-            />
-            {errors.email ? <p className="text-caption text-error">{errors.email.message}</p> : null}
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              invalid={Boolean(errors.password)}
-              {...register("password")}
-            />
-            {errors.password ? <p className="text-caption text-error">{errors.password.message}</p> : null}
-          </div>
-
-          <Button type="submit" className="w-full" loading={isSubmitting}>
-            Sign in
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+      </section>
+    </div>
   );
 }

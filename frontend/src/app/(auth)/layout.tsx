@@ -15,15 +15,9 @@ export default function AuthLayout({ children }: PropsWithChildren) {
     }
   }, [isAuthenticated, isLoading, router]);
 
-  if (isLoading) {
-    return <div className="min-h-screen bg-background" />;
+  if (isLoading || isAuthenticated) {
+    return <div className="min-h-screen bg-surface-container-lowest" />;
   }
 
-  if (isAuthenticated) {
-    return <div className="min-h-screen bg-background" />;
-  }
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">{children}</div>
-  );
+  return <div className="min-h-screen">{children}</div>;
 }

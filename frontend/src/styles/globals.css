@@ -69,10 +69,10 @@
   --color-outline: #72777f;
   --color-outline-variant: #c2c7d0;
 
-  /* Primary */
-  --color-primary: #0b3f69;
+  /* Primary — sampled from the product design (CTA #2b5782) */
+  --color-primary: #2b5782;
   --color-on-primary: #ffffff;
-  --color-primary-container: #2b5782;
+  --color-primary-container: #1f4269;
   --color-on-primary-container: #a3cdfe;
   --color-inverse-primary: #a0cafb;
   --color-primary-fixed: #d1e4ff;
@@ -106,10 +106,21 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
+  /* Muted text and hairline rules (sampled from the product design) */
+  --color-on-surface-muted: #64748b;
+  --color-on-surface-subtle: #94a3b8;
+  --color-divider: #f3f5f9;
+
+  /* Marketing surface used by the split auth layout */
+  --color-surface-accent: #eaf2f7;
+  --color-accent: #8fbdb1;
+  --color-accent-muted: #c2dcd6;
+
   /* Semantic status */
   --color-danger: #ba1a1a;
   --color-danger-container: #ffdad6;
   --color-on-danger: #ffffff;
+  --color-on-danger-container: #93000a;
   --color-success: #1e7d3c;
   --color-success-container: #e6f4ea;
   --color-warning: #b45309;
