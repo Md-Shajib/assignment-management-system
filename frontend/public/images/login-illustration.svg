@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-hidden="true">
+  <rect width="400" height="300" rx="8" fill="#e6f2ea" />
+  <circle cx="150" cy="150" r="92" fill="#ffffff" opacity="0.55" />
+
+  <!-- Abstract learner pair, standing in for the final artwork -->
+  <g fill="#8fbdb1">
+    <circle cx="118" cy="118" r="20" />
+    <path d="M88 205c0-19 13-33 30-33s30 14 30 33v18H88z" />
+  </g>
+  <g fill="#c2dcd6">
+    <circle cx="182" cy="126" r="18" />
+    <path d="M155 205c0-17 12-30 27-30s27 13 27 30v18h-54z" />
+  </g>
+  <rect x="96" y="196" width="52" height="34" rx="4" fill="#ffffff" />
+  <rect x="104" y="205" width="36" height="3" rx="1.5" fill="#c2dcd6" />
+  <rect x="104" y="213" width="26" height="3" rx="1.5" fill="#c2dcd6" />
+
+  <!-- Companion panel echoing the product surface -->
+  <rect x="248" y="46" width="118" height="208" rx="8" fill="#ffffff" />
+  <rect x="268" y="76" width="78" height="6" rx="3" fill="#dbe7ee" />
+  <rect x="268" y="100" width="58" height="5" rx="2.5" fill="#eaf2f7" />
+  <rect x="268" y="118" width="78" height="18" rx="4" fill="#f3f7fa" />
+  <rect x="268" y="150" width="58" height="5" rx="2.5" fill="#eaf2f7" />
+  <rect x="268" y="168" width="78" height="18" rx="4" fill="#f3f7fa" />
+  <rect x="268" y="204" width="78" height="20" rx="5" fill="#2b5782" />
+</svg>
