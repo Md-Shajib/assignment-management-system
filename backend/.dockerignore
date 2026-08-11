@@ -1,0 +1,13 @@
+# Backend build context excludes - keeps the image small and avoids stale artifacts.
+bin/
+obj/
+out/
+TestResults/
+tests/
+deployment/
+.vs/
+.env
+.env.local
+*.user
+appsettings.Development.json
+appsettings.Local.json
