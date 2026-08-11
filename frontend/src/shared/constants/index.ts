@@ -7,11 +7,12 @@ export const STORAGE_KEYS = {
 export const ROUTES = {
   login: "/login",
   dashboard: "/",
-  courses: "/courses",
-  teachers: "/teachers",
-  students: "/students",
+  users: "/users",
+  classes: "/classes",
+  subjects: "/subjects",
   assignments: "/assignments",
   submissions: "/submissions",
+  settings: "/settings",
 } as const;
 
 export const USER_ROLES = {
@@ -19,3 +20,5 @@ export const USER_ROLES = {
   TEACHER: "Teacher",
   STUDENT: "Student",
 } as const;
+
+export const DEFAULT_PAGE_SIZE = 10;

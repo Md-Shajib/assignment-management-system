@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { PagePlaceholder } from "@/shared/components/layout/page-placeholder";
 
 export const metadata: Metadata = {
-  title: "Submissions",
+  title: "Classes",
 };
 
-export default function SubmissionsPage() {
+export default function ClassesPage() {
   return (
     <PagePlaceholder
-      title="Submissions"
-      description="Review, grade, and track assignment submissions."
+      title="Classes"
+      description="Manage classes and the students enrolled in them."
     />
   );
 }

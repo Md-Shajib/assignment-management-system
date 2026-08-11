@@ -106,10 +106,15 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
+  /* Brand wordmark (darker than the CTA primary) */
+  --color-brand: #0b3f69;
+
   /* Muted text and hairline rules (sampled from the product design) */
   --color-on-surface-muted: #64748b;
   --color-on-surface-subtle: #94a3b8;
   --color-divider: #f3f5f9;
+  --color-border: #e1e4e8;
+  --color-border-muted: #ebedf0;
 
   /* Marketing surface used by the split auth layout */
   --color-surface-accent: #eaf2f7;
@@ -121,10 +126,18 @@
   --color-danger-container: #ffdad6;
   --color-on-danger: #ffffff;
   --color-on-danger-container: #93000a;
-  --color-success: #1e7d3c;
-  --color-success-container: #e6f4ea;
+  --color-success: #047857;
+  --color-success-container: #d1fae5;
   --color-warning: #b45309;
   --color-warning-container: #fef3c7;
+
+  /* Role badges */
+  --color-role-admin: #7f563b;
+  --color-role-admin-container: #e4dbcc;
+  --color-role-teacher: #3d6d91;
+  --color-role-teacher-container: #eaf2f7;
+  --color-role-student: #505f76;
+  --color-role-student-container: #e6e8ea;
 }
 
 body {
