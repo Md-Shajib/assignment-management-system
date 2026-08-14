@@ -22,3 +22,6 @@ export const USER_ROLES = {
 } as const;
 
 export const DEFAULT_PAGE_SIZE = 10;
+
+/** Upper bound the API clamps `pageSize` to (backend `PaginationQuery.MaxPageSize`). */
+export const MAX_PAGE_SIZE = 100;
