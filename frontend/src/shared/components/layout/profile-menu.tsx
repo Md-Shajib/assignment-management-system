@@ -1,45 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { ChevronDown, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { Avatar } from "@/shared/components/ui/avatar";
+import { useDismissable } from "@/shared/hooks/use-dismissable";
 
 export function ProfileMenu() {
   const { user, role, logout } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target;
-      if (target instanceof Node && containerRef.current && !containerRef.current.contains(target)) {
-        setIsOpen(false);
-      }
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen]);
+  const { containerRef, isOpen, close, toggle } = useDismissable();
 
   return (
     <div ref={containerRef} className="relative">
       <button
         type="button"
-        onClick={() => setIsOpen((previous) => !previous)}
+        onClick={toggle}
         aria-haspopup="menu"
         aria-expanded={isOpen}
         className="flex items-center gap-2 rounded-md px-2 py-1 text-body-sm text-on-surface transition-colors hover:bg-surface-container-low"
@@ -64,7 +38,7 @@ export function ProfileMenu() {
             type="button"
             role="menuitem"
             onClick={() => {
-              setIsOpen(false);
+              close();
               logout();
             }}
             className="flex w-full items-center gap-2 px-4 py-3 text-left text-body-sm text-on-surface transition-colors hover:bg-surface-container-low"
