@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
+import { useQueries, useQuery, type UseQueryResult } from "@tanstack/react-query";
 import { assignmentService } from "@/features/assignments/services/assignment-service";
 import type { Assignment } from "@/features/assignments/types";
 import { courseService } from "@/features/courses/services/course-service";
@@ -38,6 +38,8 @@ export const dashboardQueryKeys = {
   courses: () => [...dashboardQueryKeys.all, "courses"] as const,
   assignments: () => [...dashboardQueryKeys.all, "assignments"] as const,
   submissions: () => [...dashboardQueryKeys.all, "submissions"] as const,
+  assignmentSubmissions: (assignmentId: string) =>
+    [...dashboardQueryKeys.all, "submissions", assignmentId] as const,
 };
 
 export type CollectionQuery<T> = UseQueryResult<PagedCollection<T>, Error>;
@@ -82,5 +84,27 @@ export function useSubmissionCollectionQuery(): CollectionQuery<Submission> {
   return useQuery({
     queryKey: dashboardQueryKeys.submissions(),
     queryFn: () => fetchPagedCollection(submissionService.list, { maxPages: AGGREGATION_MAX_PAGES }),
+  });
+}
+
+/**
+ * Submissions for specific assignments, one query each.
+ *
+ * A teacher may not read `GET /submissions` unscoped — the API answers 403 unless
+ * the request names an assignment they own — so a teacher's submission totals can
+ * only be assembled assignment by assignment. Callers cap the id list.
+ */
+export function useAssignmentSubmissionQueries(
+  assignmentIds: readonly string[],
+): CollectionQuery<Submission>[] {
+  return useQueries({
+    queries: assignmentIds.map((assignmentId) => ({
+      queryKey: dashboardQueryKeys.assignmentSubmissions(assignmentId),
+      queryFn: () =>
+        fetchPagedCollection(
+          (request) => submissionService.list({ ...request, assignmentId }),
+          { maxPages: AGGREGATION_MAX_PAGES },
+        ),
+    })),
   });
 }

@@ -3,42 +3,21 @@
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { Card } from "@/shared/components/ui/card";
 import { USER_ROLES } from "@/shared/constants";
-import { AssignmentsPublishedCard } from "./assignments-published-card";
-import { RecentActivityCard } from "./recent-activity-card";
-import { StatCards } from "./stat-cards";
-
-function AdminOverview() {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-h1">Overview</h1>
-        <p className="mt-1 text-body-sm text-on-surface-muted">
-          Here&apos;s a summary of your institution&apos;s metrics.
-        </p>
-      </div>
-
-      <StatCards />
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        <AssignmentsPublishedCard className="lg:col-span-2" />
-        <RecentActivityCard />
-      </div>
-    </div>
-  );
-}
+import { AdminOverview } from "./admin/admin-overview";
+import { TeacherOverview } from "./teacher/teacher-overview";
 
 /**
- * Teachers and students reach the same route, but every source the admin overview
- * reads is either Admin-only or scoped away from them by the API. They get a
- * greeting until their own dashboards are built.
+ * Students reach the same route, but the overview widgets built so far read
+ * sources the API scopes away from them. They get a greeting until a student
+ * dashboard exists.
  */
-function RoleOverview({ name, roleLabel }: { name: string; roleLabel: string }) {
+function StudentOverview({ name }: { name: string }) {
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-h1">Overview</h1>
         <p className="mt-1 text-body-sm text-on-surface-muted">
-          Welcome back, {name}. Here is your workspace as a {roleLabel}.
+          Welcome back, {name}. Here is your workspace as a student.
         </p>
       </div>
 
@@ -59,10 +38,9 @@ export function DashboardOverview() {
     return <AdminOverview />;
   }
 
-  return (
-    <RoleOverview
-      name={user?.fullName ?? user?.email ?? "there"}
-      roleLabel={role === USER_ROLES.TEACHER ? "teacher" : "student"}
-    />
-  );
+  if (role === USER_ROLES.TEACHER) {
+    return <TeacherOverview />;
+  }
+
+  return <StudentOverview name={user?.fullName ?? user?.email ?? "there"} />;
 }

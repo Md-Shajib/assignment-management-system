@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { AssignmentStatus } from "@/features/assignments/types";
 
 /** A headline number on the overview, rendered as a stat tile. */
 export interface DashboardMetric {
@@ -9,6 +10,20 @@ export interface DashboardMetric {
   value: number | null;
   isLoading: boolean;
   errorMessage: string | null;
+}
+
+/** A row of the teacher's active-assignments table. */
+export interface AssignmentRow {
+  id: string;
+  title: string;
+  courseName: string;
+  courseCode: string | null;
+  status: AssignmentStatus;
+  dueLabel: string;
+  /** Epoch milliseconds, used for ordering; `null` when the deadline is unreadable. */
+  dueTimestamp: number | null;
+  /** Due today or already past — surfaced in the table as a warning. */
+  isDueSoon: boolean;
 }
 
 /** One bar of the weekly assignments chart. */

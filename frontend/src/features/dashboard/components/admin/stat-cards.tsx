@@ -1,6 +1,6 @@
 "use client";
 
-import { useDashboardMetrics } from "../hooks/use-dashboard-metrics";
+import { useDashboardMetrics } from "../../hooks/use-dashboard-metrics";
 import { StatCard } from "./stat-card";
 
 export function StatCards() {

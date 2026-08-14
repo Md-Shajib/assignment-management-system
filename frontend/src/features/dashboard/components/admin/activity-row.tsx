@@ -1,6 +1,6 @@
 import { BookOpen, CircleCheck, FilePen, FileText, Lock, Upload, type LucideIcon } from "lucide-react";
 import { formatDateTime, formatRelativeTime } from "@/shared/utils/date";
-import type { ActivityItem, ActivityKind } from "../types";
+import type { ActivityItem, ActivityKind } from "../../types";
 
 const KIND_ICONS: Record<ActivityKind, LucideIcon> = {
   "assignment-published": FileText,
