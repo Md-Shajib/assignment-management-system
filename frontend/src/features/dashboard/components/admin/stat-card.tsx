@@ -1,6 +1,6 @@
 import { Card } from "@/shared/components/ui/card";
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import type { DashboardMetric } from "../types";
+import type { DashboardMetric } from "../../types";
 
 /**
  * A single headline total.

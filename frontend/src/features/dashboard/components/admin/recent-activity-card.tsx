@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card } from "@/shared/components/ui/card";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { cn } from "@/shared/utils/cn";
-import { useRecentActivity } from "../hooks/use-recent-activity";
+import { useRecentActivity } from "../../hooks/use-recent-activity";
 import { ActivityRow } from "./activity-row";
 
 const COLLAPSED_COUNT = 5;

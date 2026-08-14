@@ -8,9 +8,9 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 import { useDismissable } from "@/shared/hooks/use-dismissable";
 import { ROUTES } from "@/shared/constants";
 import { cn } from "@/shared/utils/cn";
-import { useAssignmentsPublished } from "../hooks/use-assignments-published";
-import { dashboardQueryKeys } from "../hooks/use-dashboard-sources";
-import { WeeklyBarChart } from "./weekly-bar-chart";
+import { useAssignmentsPublished } from "../../hooks/use-assignments-published";
+import { dashboardQueryKeys } from "../../hooks/use-dashboard-sources";
+import { WeeklyBarChart } from "../weekly-bar-chart";
 
 const MENU_ITEM_CLASSES =
   "flex w-full items-center gap-2 px-4 py-2.5 text-left text-body-sm text-on-surface transition-colors hover:bg-surface-container-low";
