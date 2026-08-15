@@ -21,3 +21,18 @@ export interface Assignment {
   createdAt: string;
   updatedAt?: string | null;
 }
+
+/**
+ * Body of `POST /assignments`. The API always creates in `Draft`; publishing is a
+ * separate transition, so the status is not part of the payload.
+ */
+export interface CreateAssignmentRequest {
+  courseId: string;
+  title: string;
+  description: string;
+  maxMarks: number;
+  /** ISO-8601 UTC instant. */
+  deadline: string;
+  /** ISO-8601 UTC instant; omitted when late submissions are not accepted. */
+  lateSubmissionEndDate?: string;
+}

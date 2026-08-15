@@ -11,6 +11,7 @@ export const ROUTES = {
   classes: "/classes",
   subjects: "/subjects",
   assignments: "/assignments",
+  assignmentCreate: "/assignments/new",
   submissions: "/submissions",
   settings: "/settings",
 } as const;

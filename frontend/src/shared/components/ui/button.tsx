@@ -19,6 +19,29 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: "h-12 px-6 text-body",
 };
 
+export interface ButtonStyleOptions {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+}
+
+/**
+ * The button's visual contract, exposed so a link that acts as a button can wear
+ * it without duplicating the class list.
+ */
+export function buttonClasses({
+  variant = "primary",
+  size = "md",
+  className,
+}: ButtonStyleOptions = {}): string {
+  return cn(
+    "relative inline-flex items-center justify-center gap-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-60",
+    variantClasses[variant],
+    sizeClasses[size],
+    className,
+  );
+}
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -32,12 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   return (
     <button
       ref={ref}
-      className={cn(
-        "relative inline-flex items-center justify-center gap-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-60",
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-      )}
+      className={buttonClasses({ variant, size, className })}
       disabled={disabled || loading}
       {...props}
     >

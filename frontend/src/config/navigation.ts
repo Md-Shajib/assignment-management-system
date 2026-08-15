@@ -48,6 +48,15 @@ export const SETTINGS_NAV_ITEM: NavItem = {
 
 const ALL_NAV_ITEMS: NavItem[] = [...NAV_ITEMS, SETTINGS_NAV_ITEM];
 
+/**
+ * Routes that are reached from inside a section rather than the sidebar, and so
+ * need their own role gate — they would otherwise inherit their parent's access.
+ */
+const ROUTE_ROLE_OVERRIDES: ReadonlyArray<{ path: string; roles: UserRole[] }> = [
+  // `POST /assignments` is Admin/Teacher only (docs/04-API-DESIGN.md §8.6).
+  { path: ROUTES.assignmentCreate, roles: ["Admin", "Teacher"] },
+];
+
 /** Resolves the nav section owning a path, including its nested routes. */
 export function findNavItemByPath(pathname: string): NavItem | undefined {
   return ALL_NAV_ITEMS.find((item) =>
@@ -59,6 +68,11 @@ export function findNavItemByPath(pathname: string): NavItem | undefined {
 
 /** Routes outside the nav config are open to any authenticated user. */
 export function canAccessPath(pathname: string, role: UserRole): boolean {
+  const override = ROUTE_ROLE_OVERRIDES.find((entry) => entry.path === pathname);
+  if (override) {
+    return override.roles.includes(role);
+  }
+
   const item = findNavItemByPath(pathname);
   return item === undefined || item.roles.includes(role);
 }

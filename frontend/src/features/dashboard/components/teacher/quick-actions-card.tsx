@@ -35,9 +35,9 @@ function ActionBody({ icon: Icon, title, description }: ActionBodyProps) {
 }
 
 /**
- * Only grading has a destination today: there is no assignment-authoring screen
- * yet, and the API has no messaging endpoint at all, so those two are disabled
- * rather than linked somewhere that cannot fulfil them.
+ * Messaging is the one action without a destination — the API has no messaging
+ * endpoint at all — so it is disabled rather than linked somewhere that cannot
+ * fulfil it.
  */
 export function QuickActionsCard({ className }: { className?: string }) {
   const { pendingCount, isLoading } = useTeacherSubmissions();
@@ -51,14 +51,12 @@ export function QuickActionsCard({ className }: { className?: string }) {
       <h2 className="text-h3 tracking-tight">Quick Actions</h2>
 
       <div className="mt-5 space-y-3">
-        <button
-          type="button"
-          disabled
-          title="Creating assignments is not available yet"
-          className={cn(ACTION_CLASSES, "disabled:cursor-not-allowed disabled:opacity-60")}
+        <Link
+          href={ROUTES.assignmentCreate}
+          className={cn(ACTION_CLASSES, "hover:bg-surface-container-low")}
         >
           <ActionBody icon={SquarePen} title="New Assignment" description="Create a task for students" />
-        </button>
+        </Link>
 
         <Link href={ROUTES.submissions} className={cn(ACTION_CLASSES, "hover:bg-surface-container-low")}>
           <ActionBody icon={FileCheck2} title="Grade Submissions" description={pendingLabel} />
