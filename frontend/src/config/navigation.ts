@@ -48,14 +48,29 @@ export const SETTINGS_NAV_ITEM: NavItem = {
 
 const ALL_NAV_ITEMS: NavItem[] = [...NAV_ITEMS, SETTINGS_NAV_ITEM];
 
+interface RouteRoleOverride {
+  path: string;
+  roles: UserRole[];
+  /** Matches the path itself and everything nested under it. */
+  includeNested?: boolean;
+}
+
 /**
  * Routes that are reached from inside a section rather than the sidebar, and so
  * need their own role gate — they would otherwise inherit their parent's access.
  */
-const ROUTE_ROLE_OVERRIDES: ReadonlyArray<{ path: string; roles: UserRole[] }> = [
+const ROUTE_ROLE_OVERRIDES: readonly RouteRoleOverride[] = [
   // `POST /assignments` is Admin/Teacher only (docs/04-API-DESIGN.md §8.6).
   { path: ROUTES.assignmentCreate, roles: ["Admin", "Teacher"] },
+  // Reviewing a submission calls `PATCH /submissions/{id}/review`, Admin/Teacher only.
+  { path: ROUTES.submissions, roles: ["Admin", "Teacher"], includeNested: true },
 ];
+
+function findRoleOverride(pathname: string): RouteRoleOverride | undefined {
+  return ROUTE_ROLE_OVERRIDES.find((entry) =>
+    entry.includeNested ? pathname.startsWith(`${entry.path}/`) : entry.path === pathname,
+  );
+}
 
 /** Resolves the nav section owning a path, including its nested routes. */
 export function findNavItemByPath(pathname: string): NavItem | undefined {
@@ -68,7 +83,7 @@ export function findNavItemByPath(pathname: string): NavItem | undefined {
 
 /** Routes outside the nav config are open to any authenticated user. */
 export function canAccessPath(pathname: string, role: UserRole): boolean {
-  const override = ROUTE_ROLE_OVERRIDES.find((entry) => entry.path === pathname);
+  const override = findRoleOverride(pathname);
   if (override) {
     return override.roles.includes(role);
   }

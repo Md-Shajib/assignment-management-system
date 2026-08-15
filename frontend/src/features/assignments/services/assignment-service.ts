@@ -16,6 +16,11 @@ export const assignmentService = {
     });
   },
 
+  /** `GET /assignments/{id}` — the owning teacher, an admin, or a student it is published to. */
+  getById(assignmentId: string): Promise<ApiResponse<Assignment>> {
+    return httpClient.get(`/assignments/${assignmentId}`, assignmentSchema);
+  },
+
   /** `POST /assignments` — Admin or the teacher assigned to the course. Creates a draft. */
   create(request: CreateAssignmentRequest): Promise<ApiResponse<Assignment>> {
     return httpClient.post("/assignments", assignmentSchema, request);
