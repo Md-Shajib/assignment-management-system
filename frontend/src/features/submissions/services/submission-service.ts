@@ -19,6 +19,11 @@ export const submissionService = {
     });
   },
 
+  /** `GET /submissions/my` — the signed-in student's own submissions. */
+  listMine(): Promise<ApiResponse<Submission[]>> {
+    return httpClient.get("/submissions/my", submissionListSchema);
+  },
+
   /** `GET /submissions/{id}` — Admin, the owning teacher, or the student who submitted. */
   getById(submissionId: string): Promise<ApiResponse<Submission>> {
     return httpClient.get(`/submissions/${submissionId}`, submissionSchema);
