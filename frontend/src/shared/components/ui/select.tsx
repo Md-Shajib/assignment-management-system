@@ -2,14 +2,17 @@ import { forwardRef, type SelectHTMLAttributes } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 
-export type SelectProps = SelectHTMLAttributes<HTMLSelectElement>;
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  /** Styles the wrapper that positions the chevron — use it to widen the control. */
+  containerClassName?: string;
+}
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { className, children, ...props },
+  { className, containerClassName, children, ...props },
   ref,
 ) {
   return (
-    <div className="relative inline-flex">
+    <div className={cn("relative inline-flex", containerClassName)}>
       <select
         ref={ref}
         className={cn(

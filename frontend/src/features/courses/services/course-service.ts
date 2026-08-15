@@ -9,4 +9,13 @@ export const courseService = {
   list({ page, pageSize }: PageRequest): Promise<ApiResponse<Course[]>> {
     return httpClient.get("/courses", courseListSchema, { params: { page, pageSize } });
   },
+
+  /**
+   * `GET /teachers/{id}/courses` — the courses a teacher is assigned to. Creating
+   * an assignment for any other course is rejected with 403, so this is the only
+   * valid set of choices a teacher has.
+   */
+  listByTeacher(teacherId: string): Promise<ApiResponse<Course[]>> {
+    return httpClient.get(`/teachers/${teacherId}/courses`, courseListSchema);
+  },
 };

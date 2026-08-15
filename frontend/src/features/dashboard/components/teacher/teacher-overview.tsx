@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Plus } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
+import { buttonClasses } from "@/shared/components/ui/button";
+import { ROUTES } from "@/shared/constants";
 import { ActiveAssignmentsCard } from "./active-assignments-card";
 import { QuickActionsCard } from "./quick-actions-card";
 import { StatTiles } from "./stat-tiles";
@@ -15,11 +17,10 @@ export function TeacherOverview() {
           </p>
         </div>
 
-        {/* No assignment-authoring screen exists yet; `POST /assignments` is API-only. */}
-        <Button disabled title="Creating assignments is not available yet">
+        <Link href={ROUTES.assignmentCreate} className={buttonClasses()}>
           <Plus className="h-4 w-4" aria-hidden />
           Create Assignment
-        </Button>
+        </Link>
       </div>
 
       <StatTiles />
