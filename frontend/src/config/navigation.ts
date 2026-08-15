@@ -49,10 +49,8 @@ export const SETTINGS_NAV_ITEM: NavItem = {
 const ALL_NAV_ITEMS: NavItem[] = [...NAV_ITEMS, SETTINGS_NAV_ITEM];
 
 interface RouteRoleOverride {
-  path: string;
+  matches: (pathname: string) => boolean;
   roles: UserRole[];
-  /** Matches the path itself and everything nested under it. */
-  includeNested?: boolean;
 }
 
 /**
@@ -61,15 +59,18 @@ interface RouteRoleOverride {
  */
 const ROUTE_ROLE_OVERRIDES: readonly RouteRoleOverride[] = [
   // `POST /assignments` is Admin/Teacher only (docs/04-API-DESIGN.md §8.6).
-  { path: ROUTES.assignmentCreate, roles: ["Admin", "Teacher"] },
-  // Reviewing a submission calls `PATCH /submissions/{id}/review`, Admin/Teacher only.
-  { path: ROUTES.submissions, roles: ["Admin", "Teacher"], includeNested: true },
+  { matches: (pathname) => pathname === ROUTES.assignmentCreate, roles: ["Admin", "Teacher"] },
+  // `POST /submissions` is Student only.
+  { matches: (pathname) => /^\/assignments\/[^/]+\/submit$/.test(pathname), roles: ["Student"] },
+  // Reviewing calls `PATCH /submissions/{id}/review`, Admin/Teacher only.
+  {
+    matches: (pathname) => pathname.startsWith(`${ROUTES.submissions}/`),
+    roles: ["Admin", "Teacher"],
+  },
 ];
 
 function findRoleOverride(pathname: string): RouteRoleOverride | undefined {
-  return ROUTE_ROLE_OVERRIDES.find((entry) =>
-    entry.includeNested ? pathname.startsWith(`${entry.path}/`) : entry.path === pathname,
-  );
+  return ROUTE_ROLE_OVERRIDES.find((entry) => entry.matches(pathname));
 }
 
 /** Resolves the nav section owning a path, including its nested routes. */

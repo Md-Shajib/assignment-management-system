@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Bold, Italic, Link, List, ListOrdered, Underline, type LucideIcon } from "lucide-react";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { cn } from "@/shared/utils/cn";
-import { applyMarkdownFormat, type MarkdownFormat } from "../utils/markdown";
+import { applyMarkdownFormat, type MarkdownFormat } from "@/shared/utils/markdown";
 
 interface ToolbarAction {
   format: MarkdownFormat;
@@ -23,7 +23,7 @@ const TOOLBAR_ACTIONS: ToolbarAction[] = [
   { format: "link", icon: Link, label: "Link", startsGroup: true },
 ];
 
-export interface DescriptionEditorProps {
+export interface MarkdownEditorProps {
   id: string;
   value: string;
   onChange: (value: string) => void;
@@ -37,12 +37,12 @@ export interface DescriptionEditorProps {
 }
 
 /**
- * A plain-text description field with Markdown shortcuts.
+ * A plain-text field with Markdown shortcuts.
  *
- * The API stores the description as a plain string, so the toolbar inserts
+ * The API stores long-form text as a plain string, so the toolbar inserts
  * Markdown rather than pretending to be a rich-text document model.
  */
-export function DescriptionEditor({
+export function MarkdownEditor({
   id,
   value,
   onChange,
@@ -52,7 +52,7 @@ export function DescriptionEditor({
   invalid,
   describedBy,
   placeholder,
-}: DescriptionEditorProps) {
+}: MarkdownEditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const runFormat = (format: MarkdownFormat) => {
