@@ -16,3 +16,12 @@ export interface Submission {
   createdAt: string;
   updatedAt?: string | null;
 }
+
+/**
+ * Body of `PATCH /submissions/{id}/review`. The awarded marks must be between 0
+ * and the assignment's maximum; the upper bound is enforced by the API.
+ */
+export interface GradeSubmissionRequest {
+  obtainedMarks: number;
+  teacherFeedback?: string;
+}
