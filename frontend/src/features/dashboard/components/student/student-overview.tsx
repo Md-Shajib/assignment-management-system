@@ -1,15 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { BookOpen, CalendarClock, CircleCheck, Clock, FileText, TrendingUp } from "lucide-react";
 import { Badge } from "@/shared/components/ui/badge";
 import { Card } from "@/shared/components/ui/card";
 import { Skeleton } from "@/shared/components/ui/skeleton";
+import { assignmentSubmitRoute } from "@/shared/constants";
 import { cn } from "@/shared/utils/cn";
 import { useStudentOverview } from "../../hooks/use-student-overview";
 import type { StudentAction, StudentAssignmentRow } from "../../utils/student-overview";
-
-/** Submitting work needs a submission screen, which does not exist yet. */
-const SUBMIT_UNAVAILABLE = "Submitting work from the browser is not available yet";
 
 const ACTION_LABELS: Record<StudentAction, string> = {
   submit: "Submit Work",
@@ -87,19 +86,23 @@ function AssignmentRow({ row }: { row: StudentAssignmentRow }) {
         </div>
       </div>
 
-      <button
-        type="button"
-        disabled
-        title={row.action === "graded" ? "This submission has been graded" : SUBMIT_UNAVAILABLE}
-        className={cn(
-          "shrink-0 rounded-md px-4 py-2 text-label disabled:cursor-not-allowed disabled:opacity-60",
-          row.action === "submit"
-            ? "bg-primary text-on-primary"
-            : "border border-outline-variant text-on-surface",
-        )}
-      >
-        {ACTION_LABELS[row.action]}
-      </button>
+      {row.action === "graded" ? (
+        <span className="shrink-0 rounded-md border border-outline-variant px-4 py-2 text-label text-on-surface-muted">
+          {ACTION_LABELS.graded}
+        </span>
+      ) : (
+        <Link
+          href={assignmentSubmitRoute(row.id)}
+          className={cn(
+            "shrink-0 rounded-md px-4 py-2 text-label transition-colors",
+            row.action === "submit"
+              ? "bg-primary text-on-primary hover:bg-primary-container"
+              : "border border-outline-variant text-on-surface hover:bg-surface-container-low",
+          )}
+        >
+          {ACTION_LABELS[row.action]}
+        </Link>
+      )}
     </li>
   );
 }

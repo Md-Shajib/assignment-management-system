@@ -16,6 +16,15 @@ export const ROUTES = {
   settings: "/settings",
 } as const;
 
+/** Nested routes that need an id, kept beside `ROUTES` so paths stay in one place. */
+export function assignmentSubmitRoute(assignmentId: string): string {
+  return `${ROUTES.assignments}/${assignmentId}/submit`;
+}
+
+export function submissionReviewRoute(submissionId: string): string {
+  return `${ROUTES.submissions}/${submissionId}`;
+}
+
 export const USER_ROLES = {
   ADMIN: "Admin",
   TEACHER: "Teacher",

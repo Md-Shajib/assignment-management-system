@@ -11,6 +11,7 @@ import { Button } from "@/shared/components/ui/button";
 import { Card } from "@/shared/components/ui/card";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { MarkdownEditor } from "@/shared/components/ui/markdown-editor";
 import { Select } from "@/shared/components/ui/select";
 import { ToggleSwitch } from "@/shared/components/ui/toggle-switch";
 import { ROUTES } from "@/shared/constants";
@@ -24,7 +25,7 @@ import {
   type AssignmentFormValues,
 } from "../schemas/assignment-form-schema";
 import type { CreateAssignmentRequest } from "../types";
-import { DescriptionEditor } from "./description-editor";
+
 
 interface FieldProps {
   htmlFor: string;
@@ -220,7 +221,7 @@ export function CreateAssignmentForm() {
               control={control}
               name="description"
               render={({ field }) => (
-                <DescriptionEditor
+                <MarkdownEditor
                   id="description"
                   name={field.name}
                   value={field.value}

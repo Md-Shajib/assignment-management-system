@@ -21,6 +21,16 @@ export interface Submission {
  * Body of `PATCH /submissions/{id}/review`. The awarded marks must be between 0
  * and the assignment's maximum; the upper bound is enforced by the API.
  */
+/**
+ * Body of `POST /submissions` and `PUT /submissions/{id}`. At least one of the
+ * text or the attachment must be present; the API rejects an empty submission.
+ */
+export interface SubmitRequest {
+  assignmentId: string;
+  submissionText?: string;
+  attachment?: string;
+}
+
 export interface GradeSubmissionRequest {
   obtainedMarks: number;
   teacherFeedback?: string;
